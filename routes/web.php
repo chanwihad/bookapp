@@ -18,5 +18,23 @@ $router->get('/', function () use ($router) {
 $router->get('/key', function () {
     return \Illuminate\Support\Str::random(32);
 });
+
 $router->get('books', 'Controller@index');
+
 $router->get('/books/{id}', 'Controller@show');
+
+$router->post('books', 'Controller@store');
+
+$router->put('books/{id}', 'Controller@update');
+
+$router->delete('books/{id}', 'Controller@destroy');
+
+$router->get('authors', 'AuthorsController@index');
+
+$router->get('/authors/{id}', 'AuthorsController@show');
+
+$router->post('authors', 'AuthorsController@store');
+
+$router->put('authors/{id}', 'AuthorsController@update');
+
+$router->delete('authors/{id}', 'AuthorsController@destroy');

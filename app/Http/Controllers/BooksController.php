@@ -2,47 +2,54 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\ModelNotFoundException;
 use Laravel\Lumen\Routing\Controller as BaseController;
 use App\Models\Book;
+use Illuminate\Http\Request;
 
-class Controller extends BaseController
+class BooksController extends BaseController
 {
-    //
+    // Menampilkan semua buku
     public function index()
-    {
-        return Book::all();
-    }
+{
+  return Book::all();
+}
+
     // Menampilkan detail buku berdasarkan ID
-    public function show($id)
+    public function show ($id)
     {
-        if ($book = Book::find($id)) {
+        if ($book = Book::find($id)){
             return response()->json([
-                'message' => 'show book by id',
-                'data' => $book
-            ], 200);
-        } else {
-            return response()->json([
-                'message' => 'book not found'
-            ], 404);
-        }
-    }
-    public function store(Request $request)
-    {
-        $this->validate($request, [
-            'title' => 'required',
-            'description' => 'required',
-            'author' => 'required'
-        ]);
-        $book = Book::create(
-            $request->only(['title', 'description', 'author'])
-        );
-        return response()->json([
-            'created' => true,
+            'message' => 'show book by id',
             'data' => $book
-        ], 201);
+            ], 200);
+            } 
+            else{
+    return response()->json([
+        'message' => 'book not found'
+    ], 404);
     }
+    }
+
+    // Menginput Buku Baru
+    public function store(Request $request)
+  {
+    $this->validate($request, [
+      'title' => 'required',
+      'description' => 'required',
+      'author' => 'required'
+      ]);
+
+      $book = Book::create(
+        $request->only(['title', 'description', 'author'])
+      );
+
+      return response()->json([
+        'created' => true,
+        'data' => $book
+      ], 201);
+}
+
+    // Memperbarui Buku
     public function update(Request $request, $id)
   {
     try {
@@ -82,4 +89,5 @@ class Controller extends BaseController
       'deleted' => true
     ], 200);
   }
+
 }
